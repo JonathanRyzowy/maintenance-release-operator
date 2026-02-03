@@ -125,6 +125,14 @@ npm publish  # if publishing to npm
 
 ---
 
+## Pricing
+
+The CLI is free forever. Org-level enforcement and enterprise features will have paid tiers.
+
+See **[PRICING.md](PRICING.md)** for economic boundaries, philosophy, and future SKUs.
+
+---
+
 ## Contributing
 
 Issues and PRs welcome. Please read the existing issues before opening a new one.
