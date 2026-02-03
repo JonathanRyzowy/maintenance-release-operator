@@ -44,6 +44,8 @@ npx maintenance-release-operator check
 ─────────────────────────────────
 ```
 
+📖 **[See Real-World Examples](docs/EXAMPLES.md)** — What MRO catches: missing LICENSE, security CVEs, lockfile conflicts, forgotten CHANGELOG, and more.
+
 ---
 
 ## Install (Optional)
