@@ -1,6 +1,6 @@
 {
   "name": "maintenance-release-operator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI tool to check repo health and automate maintenance tasks",
   "type": "module",
   "bin": {
