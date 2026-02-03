@@ -1,0 +1,55 @@
+name: 'MRO Check'
+description: 'Run maintenance-release-operator checks and post results'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  fail-on-error:
+    description: 'Whether to fail the workflow if checks fail'
+    required: false
+    default: 'true'
+  
+runs:
+  using: 'composite'
+  steps:
+    - name: Run MRO checks
+      shell: bash
+      id: mro-check
+      run: |
+        npx maintenance-release-operator check --json > ${{ runner.temp }}/mro-output.json || echo "FAILED=true" >> $GITHUB_OUTPUT
+        cat ${{ runner.temp }}/mro-output.json
+    
+    - name: Parse and display results
+      shell: bash
+      run: |
+        if [ -f "${{ runner.temp }}/mro-output.json" ]; then
+          echo "## MRO Check Results" >> $GITHUB_STEP_SUMMARY
+          # Parse JSON and format for GitHub step summary
+          node -e "
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('${{ runner.temp }}/mro-output.json', 'utf8'));
+            console.log('');
+            console.log(\`**Status:** \${data.failed > 0 ? '❌ Failed' : '✅ Passed'}\`);
+            console.log(\`**Passed:** \${data.passed}/\${data.passed + data.failed}\`);
+            console.log(\`**Failed:** \${data.failed}/\${data.passed + data.failed}\`);
+            console.log('');
+            if (data.checks) {
+              console.log('### Details');
+              console.log('');
+              data.checks.forEach(check => {
+                const icon = check.passed ? '✅' : '❌';
+                console.log(\`\${icon} **\${check.name}**\`);
+                if (check.message) console.log(\`   \${check.message}\`);
+                console.log('');
+              });
+            }
+          " >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Fail if checks failed
+      shell: bash
+      if: inputs.fail-on-error == 'true' && steps.mro-check.outputs.FAILED == 'true'
+      run: |
+        echo "❌ MRO checks failed"
+        exit 1

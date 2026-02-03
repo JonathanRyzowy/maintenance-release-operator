@@ -115,12 +115,12 @@ Add to `.github/workflows/ci.yml`:
 
 ```yaml
 - name: Run MRO checks
-  run: npx maintenance-release-operator check
+  uses: JonathanRyzowy/maintenance-release-operator@main
 ```
 
 **Result:** Pull requests cannot merge if repo standards aren't met.
 
-📖 **[Complete CI Integration Guide](docs/CI-INTEGRATION.md)** — GitHub Actions, GitLab, CircleCI, Jenkins examples + branch protection setup.
+📖 **[Complete CI Integration Guide](docs/CI-INTEGRATION.md)** — GitHub Actions (reusable action), GitLab, CircleCI, Jenkins examples + branch protection setup.
 
 ---
 

@@ -20,7 +20,32 @@ This transforms MRO from a suggestion tool → an **enforcement mechanism**.
 
 ## GitHub Actions
 
-### Basic Check
+### Option 1: Use MRO GitHub Action (Easiest)
+
+Add to `.github/workflows/ci.yml`:
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  mro-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run MRO checks
+        uses: JonathanRyzowy/maintenance-release-operator@main
+```
+
+**This is the simplest approach.** The action handles everything: runs checks, posts results to GitHub step summary, and fails the workflow if checks fail.
+
+### Option 2: Run CLI Directly
 
 Add to `.github/workflows/ci.yml`:
 

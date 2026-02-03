@@ -1,0 +1,89 @@
+name: MRO Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+jobs:
+  mro-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Run MRO checks
+        id: mro
+        run: |
+          npx maintenance-release-operator check --json > mro-output.json || echo "CHECK_FAILED=true" >> $GITHUB_ENV
+          cat mro-output.json
+          
+      - name: Post results as check
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let output = { passed: 0, failed: 0, checks: [] };
+            
+            try {
+              output = JSON.parse(fs.readFileSync('mro-output.json', 'utf8'));
+            } catch (e) {
+              console.log('Failed to parse MRO output');
+            }
+            
+            const passed = output.passed || 0;
+            const failed = output.failed || 0;
+            const total = passed + failed;
+            
+            const conclusion = failed > 0 ? 'failure' : 'success';
+            const summary = failed > 0 
+              ? `❌ ${failed} check(s) failed\n✅ ${passed} check(s) passed` 
+              : `✅ All ${passed} checks passed`;
+            
+            let details = '## MRO Repository Governance Check\n\n';
+            details += `**Result:** ${failed > 0 ? '❌ Failed' : '✅ Passed'}\n\n`;
+            details += `- Passed: ${passed}/${total}\n`;
+            details += `- Failed: ${failed}/${total}\n\n`;
+            
+            if (output.checks && output.checks.length > 0) {
+              details += '### Check Details\n\n';
+              for (const check of output.checks) {
+                const icon = check.passed ? '✅' : '❌';
+                details += `${icon} **${check.name}**\n`;
+                if (check.message) {
+                  details += `   ${check.message}\n`;
+                }
+                details += '\n';
+              }
+            }
+            
+            details += '\n---\n';
+            details += '[View examples](https://github.com/JonathanRyzowy/maintenance-release-operator/blob/main/docs/EXAMPLES.md) | ';
+            details += '[Philosophy](https://github.com/JonathanRyzowy/maintenance-release-operator/blob/main/PHILOSOPHY.md)\n';
+            
+            // Create check run
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'MRO — Repository Governance',
+              head_sha: context.payload.pull_request?.head.sha || context.sha,
+              status: 'completed',
+              conclusion: conclusion,
+              output: {
+                title: conclusion === 'success' ? 'Repository is compliant' : 'Repository has issues',
+                summary: summary,
+                text: details
+              }
+            });
+            
+            // Also set job status
+            if (conclusion === 'failure') {
+              core.setFailed('MRO checks failed');
+            }
