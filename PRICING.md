@@ -56,34 +56,56 @@ These are separate. Don't confuse them.
 
 ---
 
-## 4. Placeholder SKUs (Future Revenue)
+## 4. GitHub App Pricing Tiers
 
-These are not live yet, but represent the monetization roadmap:
+### Free (Individuals & Public Repos)
+- **$0/month**
+- Automated enforcement on public repositories
+- GitHub Checks integration
+- Community support
 
-### GitHub App — $29–$99/org/month
-- Org-level automated checks on push
-- Policy enforcement across all repos
-- Slack/Discord notifications
-- Team dashboard with aggregated health scores
+**Target:** Open-source projects, individual developers
 
-**Target customer:** 10–100 person engineering teams with 20+ repos
+### Starter — $29/month
+- **Up to 5 private repositories**
+- Automated PR checks (blocks merge if noncompliant)
+- GitHub Checks integration
+- Email support (48-hour response)
 
-### Enterprise — "Talk to us"
-- Self-hosted deployment with support
-- SSO/SAML integration
-- Custom compliance rules
-- Dedicated Slack channel or email support
-- SLA guarantees (4-hour response)
+**Target:** Small teams, early-stage startups (2–5 repos)
 
-**Target customer:** 500+ person orgs with security/compliance requirements
+### Organization — $99/month
+- **Up to 50 private repositories**
+- Everything in Starter, plus:
+  - Compliance dashboard (aggregated health scores)
+  - Slack/Discord notifications
+  - Email support (24-hour response)
+  - Historical compliance tracking
 
-### Professional Support — $500/month
-- Priority bug fixes (48-hour turnaround)
+**Target:** Growing teams (10–50 engineers, 10–50 repos)
+
+### Enterprise — $500+/month
+- **Unlimited private repositories**
+- Everything in Organization, plus:
+  - Self-hosted deployment option
+  - Audit logs and compliance reporting
+  - Custom policy exceptions
+  - Dedicated Slack channel or email support
+  - SLA guarantees (4-hour response)
+  - SSO/SAML integration
+
+**Target:** Large organizations (100+ engineers, security/compliance requirements)
+
+---
+
+### Add-On: Professional Support — $500/month
+- Works with any tier (including free CLI)
+- Priority bug fixes (24-hour turnaround)
 - Feature requests escalated
 - Direct email or Slack access
-- Works with any tier (including free)
+- Onboarding assistance
 
-**Target customer:** Teams that depend on this tool in production CI/CD
+**Target:** Teams that depend on MRO in production CI/CD without using the GitHub App
 
 ---
 
@@ -91,12 +113,14 @@ These are not live yet, but represent the monetization roadmap:
 
 As of 2026-02-03:
 - ✅ Free CLI is live and functional
-- ⏳ GitHub App is under development
-- ⏳ Enterprise features are planned but not built
-- ⏳ Payment infrastructure is not yet live
+- 🚧 GitHub App MVP is under development
+- ⏳ Paid tiers will launch after GitHub App is tested
+- ⏳ Payment infrastructure (Stripe) in progress
 
 **When will paid features be available?**  
-When they're built and tested. No timelines, no promises. Subscribe to GitHub releases for updates.
+GitHub App MVP is the next priority. Paid tiers will launch once org-level enforcement is proven stable. Subscribe to GitHub releases for updates.
+
+**Early access:** If you want to be an early customer and influence the GitHub App features, open an issue with the tag `github-app-early-access`.
 
 ---
 

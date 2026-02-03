@@ -142,6 +142,24 @@ Add to `.github/workflows/ci.yml`:
 
 ---
 
+## Plans
+
+| Feature | Free (CLI) | Starter ($29/mo) | Organization ($99/mo) | Enterprise ($500+/mo) |
+|---------|------------|------------------|----------------------|----------------------|
+| **Local CLI** | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited |
+| **Public repos** | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited |
+| **Private repos (GitHub App)** | ❌ | ✅ Up to 5 | ✅ Up to 50 | ✅ Unlimited |
+| **Automated PR checks** | ❌ | ✅ | ✅ | ✅ |
+| **Compliance dashboard** | ❌ | ❌ | ✅ | ✅ |
+| **Slack/Discord integration** | ❌ | ❌ | ✅ | ✅ |
+| **Audit logs & reporting** | ❌ | ❌ | ❌ | ✅ |
+| **Self-hosted deployment** | ✅ (DIY) | ❌ | ❌ | ✅ |
+| **Support** | Community | Email (48h) | Email (24h) | Dedicated + SLA (4h) |
+
+See **[PRICING.md](PRICING.md)** for full details, philosophy, and economic boundaries.
+
+---
+
 ## Roadmap
 
 - [x] `mro release` — Automate changelog + version bump + tag ✅
@@ -153,9 +171,9 @@ Add to `.github/workflows/ci.yml`:
 
 ## Pricing
 
-The CLI is free forever. Org-level enforcement and enterprise features will have paid tiers.
+The CLI is free forever. GitHub App (org-level enforcement) has paid tiers starting at $29/mo.
 
-See **[PRICING.md](PRICING.md)** for economic boundaries, philosophy, and future SKUs.
+See the **Plans** section above for a feature comparison, or **[PRICING.md](PRICING.md)** for philosophy and economic boundaries.
 
 ---
 
