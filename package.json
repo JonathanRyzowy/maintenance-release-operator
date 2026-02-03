@@ -1,23 +1,46 @@
 {
   "name": "maintenance-release-operator",
   "version": "0.1.0",
-  "description": "Agent for automated maintenance and release operations",
+  "description": "CLI tool to check repo health and automate maintenance tasks",
   "type": "module",
+  "bin": {
+    "maintenance-release-operator": "./src/index.js",
+    "mro": "./src/index.js"
+  },
+  "main": "./src/index.js",
   "scripts": {
     "test": "node --test tests/*.test.js",
     "lint": "echo 'Lint placeholder - pass' && exit 0",
-    "ci": "npm run lint && npm run test"
+    "ci": "npm run lint && npm run test",
+    "start": "node src/index.js"
   },
   "keywords": [
     "maintenance",
     "release",
     "automation",
     "agent",
-    "devops"
+    "devops",
+    "cli",
+    "repo-health",
+    "changelog",
+    "dependencies"
   ],
   "author": "JonathanRyzowy",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "files": [
+    "src/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JonathanRyzowy/maintenance-release-operator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JonathanRyzowy/maintenance-release-operator/issues"
+  },
+  "homepage": "https://github.com/JonathanRyzowy/maintenance-release-operator#readme"
 }
