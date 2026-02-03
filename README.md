@@ -66,6 +66,36 @@ mro check --json    # JSON output for scripting
 - `0` — All checks passed
 - `1` — One or more checks failed
 
+### `release`
+
+Automate version bumping, changelog updates, and git tagging.
+
+```bash
+mro release          # Bump patch version (default)
+mro release patch    # Bump patch: 1.2.3 → 1.2.4
+mro release minor    # Bump minor: 1.2.3 → 1.3.0
+mro release major    # Bump major: 1.2.3 → 2.0.0
+```
+
+**What it does:**
+1. ✅ Checks working tree is clean
+2. ✅ Runs CI checks (`npm run ci`)
+3. ✅ Calculates next version
+4. ✅ Updates `package.json`
+5. ✅ Updates `CHANGELOG.md` with recent commits
+6. ✅ Creates git commit and tag (`vX.Y.Z`)
+
+**Safety checks:**
+- ❌ Fails if working tree is dirty
+- ❌ Fails if CI checks fail
+
+**After release:**
+```bash
+git push origin main
+git push origin v1.2.4
+npm publish  # if publishing to npm
+```
+
 ---
 
 ## What It Checks
@@ -88,7 +118,7 @@ mro check --json    # JSON output for scripting
 
 ## Roadmap
 
-- [ ] `mro release` — Automate changelog + version bump + tag
+- [x] `mro release` — Automate changelog + version bump + tag ✅
 - [ ] `mro deps` — Check for outdated/vulnerable dependencies
 - [ ] `mro audit` — Security-focused checks
 - [ ] Config file support (`.mrorc`)
