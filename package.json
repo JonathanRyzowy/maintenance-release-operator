@@ -23,7 +23,15 @@
     "cli",
     "repo-health",
     "changelog",
-    "dependencies"
+    "dependencies",
+    "developer-tools",
+    "developer-experience",
+    "repository-maintenance",
+    "git-workflow",
+    "semantic-versioning",
+    "ci-cd",
+    "version-management",
+    "release-automation"
   ],
   "author": "JonathanRyzowy",
   "license": "MIT",
