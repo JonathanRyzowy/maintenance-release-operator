@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 
 import { check } from './commands/check.js';
+import { release } from './commands/release.js';
 
 const args = process.argv.slice(2);
 const command = args[0];
 
 const commands = {
   check,
+  release,
   help: showHelp,
 };
 
@@ -19,10 +21,12 @@ USAGE
 
 COMMANDS
   check    Run maintenance checks on current repo
+  release  Bump version, update changelog, and tag
   help     Show this help message
 
 EXAMPLES
   npx maintenance-release-operator check
+  npx maintenance-release-operator release patch
   npx maintenance-release-operator check --json
 
 Learn more: https://github.com/JonathanRyzowy/maintenance-release-operator
