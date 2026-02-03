@@ -105,6 +105,23 @@ npm publish  # if publishing to npm
 
 ---
 
+## Enforce in CI
+
+**Turn MRO from a suggestion tool → an enforcement mechanism.**
+
+Add to `.github/workflows/ci.yml`:
+
+```yaml
+- name: Run MRO checks
+  run: npx maintenance-release-operator check
+```
+
+**Result:** Pull requests cannot merge if repo standards aren't met.
+
+📖 **[Complete CI Integration Guide](docs/CI-INTEGRATION.md)** — GitHub Actions, GitLab, CircleCI, Jenkins examples + branch protection setup.
+
+---
+
 ## What It Checks
 
 | Check | Enforcement Reason |
