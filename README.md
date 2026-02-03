@@ -1,12 +1,19 @@
 # maintenance-release-operator
 
-**Keep your repos healthy. Ship releases faster.**
+**Enforce truth in your repositories.**
 
-One command to check your repo for common maintenance issues — missing files, outdated config, forgotten hygiene. Fix problems before they become blockers.
+MRO is a strict, deterministic governance tool that checks repo legitimacy and automates compliant releases. No flexibility by default. No AI. No dark patterns.
+
+> **Philosophy:** MRO enforces what repositories claim about themselves. If your README says tests pass, they better pass. If you have dependencies, they better be secure. See **[PHILOSOPHY.md](PHILOSOPHY.md)** for governance principles.
 
 [![CI](https://github.com/JonathanRyzowy/maintenance-release-operator/actions/workflows/ci.yml/badge.svg)](https://github.com/JonathanRyzowy/maintenance-release-operator/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/maintenance-release-operator.svg)](https://www.npmjs.com/package/maintenance-release-operator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**Core Documents:**  
+📜 [PHILOSOPHY.md](PHILOSOPHY.md) — Governance principles, strictness guarantees, what MRO will never become  
+💰 [PRICING.md](PRICING.md) — Economic boundaries, free vs. paid, monetization model  
+🛡️ [POLICY.md](POLICY.md) — Safety constraints, engineering guardrails, data handling
 
 ---
 
@@ -100,19 +107,19 @@ npm publish  # if publishing to npm
 
 ## What It Checks
 
-| Check | Why It Matters |
-|-------|---------------|
-| `package.json` | Required for Node projects |
-| `README.md` | First thing users see |
-| `LICENSE` | Legal clarity for contributors |
-| `CHANGELOG.md` | Track what changed between versions |
-| `.gitignore` | Avoid committing junk |
-| Lockfile conflicts | Multiple lockfiles cause CI failures |
-| CI workflow | Automated testing prevents regressions |
-| Test script | Ensures `npm test` works |
-| Node engines | Specifies supported Node versions |
-| Outdated deps | Flags packages needing updates |
-| Security vulns | Catches high/critical vulnerabilities |
+| Check | Enforcement Reason |
+|-------|-------------------|
+| `package.json` | Node projects must declare dependencies and metadata |
+| `README.md` | Repos without documentation are unmaintainable |
+| `LICENSE` | No license = legal ambiguity = unusable |
+| `CHANGELOG.md` | Version history must be documented |
+| `.gitignore` | Secrets and build artifacts must not be committed |
+| Lockfile conflicts | Multiple lockfiles = non-deterministic installs |
+| CI workflow | Claims of "tests passing" must be verifiable |
+| Test script | `npm test` must be runnable |
+| Node engines | Supported versions must be declared |
+| Outdated deps | Stale dependencies accumulate security debt |
+| Security vulns | Known CVEs must be surfaced |
 
 ---
 
