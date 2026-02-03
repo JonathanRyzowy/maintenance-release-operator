@@ -8,7 +8,7 @@
       "paid_users": 0,
       "mrr_usd": 0,
       "conversion_install_to_paid": 0,
-      "notes": "Initial commit. Repo bootstrapped."
+      "notes": "Repo foundation complete. PHILOSOPHY.md, PRICING.md, POLICY.md shipped. Core features (mro check, mro release) merged. GitHub topics added. Package not yet published to npm (blocker #14)."
     }
   ]
 }
