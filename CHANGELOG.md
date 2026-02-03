@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial `check` command for repo health checks
+- Dependency checks: outdated packages detection
+- Security checks: npm audit integration (high/critical vulns)
+- Package quality checks: test script, engines field
 - CLI with `mro` alias
 - JSON output support (`--json` flag)
 - Basic maintenance checks:
