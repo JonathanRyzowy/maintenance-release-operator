@@ -79,6 +79,10 @@ mro check --json    # JSON output for scripting
 | `.gitignore` | Avoid committing junk |
 | Lockfile conflicts | Multiple lockfiles cause CI failures |
 | CI workflow | Automated testing prevents regressions |
+| Test script | Ensures `npm test` works |
+| Node engines | Specifies supported Node versions |
+| Outdated deps | Flags packages needing updates |
+| Security vulns | Catches high/critical vulnerabilities |
 
 ---
 
