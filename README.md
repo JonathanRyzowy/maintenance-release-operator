@@ -165,6 +165,12 @@ Issues and PRs welcome. Please read the existing issues before opening a new one
 
 ---
 
+## Support
+
+If MRO saves you time, consider supporting continued maintenance. See **[SUPPORT.md](SUPPORT.md)** for details.
+
+---
+
 ## License
 
 MIT
