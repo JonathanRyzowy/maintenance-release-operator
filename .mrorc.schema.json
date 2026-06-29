@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "maintenance-release-operator configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Stable check IDs to treat as explicit policy exceptions."
+    },
+    "skip": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Check groups to skip, such as network."
+    },
+    "failLevel": {
+      "enum": ["high", "critical", "all"],
+      "default": "high",
+      "description": "npm audit severity threshold."
+    }
+  }
+}

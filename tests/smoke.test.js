@@ -8,16 +8,14 @@ describe('Smoke Tests', () => {
 
   it('should have valid contract files accessible', async () => {
     const fs = await import('node:fs/promises');
-    
-    const requiredFiles = [
-      'GOAL.md',
-      'FUNNEL.md',
-      'SCOREBOARD.json',
-      'POLICY.md'
-    ];
+
+    const requiredFiles = ['GOAL.md', 'FUNNEL.md', 'SCOREBOARD.json', 'POLICY.md'];
 
     for (const file of requiredFiles) {
-      const exists = await fs.access(file).then(() => true).catch(() => false);
+      const exists = await fs
+        .access(file)
+        .then(() => true)
+        .catch(() => false);
       assert.strictEqual(exists, true, `${file} should exist`);
     }
   });
@@ -26,10 +24,10 @@ describe('Smoke Tests', () => {
     const fs = await import('node:fs/promises');
     const content = await fs.readFile('SCOREBOARD.json', 'utf-8');
     const data = JSON.parse(content);
-    
+
     assert.ok(Array.isArray(data.entries), 'SCOREBOARD should have entries array');
     assert.ok(data.entries.length > 0, 'SCOREBOARD should have at least one entry');
-    
+
     const entry = data.entries[0];
     assert.ok('date' in entry, 'Entry should have date');
     assert.ok('mrr_usd' in entry, 'Entry should have mrr_usd');

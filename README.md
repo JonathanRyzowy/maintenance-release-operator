@@ -25,6 +25,7 @@ npx maintenance-release-operator check
 ```
 
 **Output:**
+
 ```
 🔍 Running maintenance checks...
 
@@ -69,9 +70,15 @@ Run all maintenance checks on the current repo.
 ```bash
 mro check           # Human-readable output
 mro check --json    # JSON output for scripting
+mro check --format json
+mro check --no-color --quiet
+mro check --verbose
+mro check --fail-level critical
+mro check --skip network
 ```
 
 **Exit codes:**
+
 - `0` — All checks passed
 - `1` — One or more checks failed
 
@@ -84,9 +91,15 @@ mro release          # Bump patch version (default)
 mro release patch    # Bump patch: 1.2.3 → 1.2.4
 mro release minor    # Bump minor: 1.2.3 → 1.3.0
 mro release major    # Bump major: 1.2.3 → 2.0.0
+mro release prerelease --preid beta
+mro release from-commits
+mro release patch --dry-run
+mro release patch --no-tag --no-commit --yes
+mro release patch --changelog-only --yes
 ```
 
 **What it does:**
+
 1. ✅ Checks working tree is clean
 2. ✅ Runs CI checks (`npm run ci`)
 3. ✅ Calculates next version
@@ -95,14 +108,28 @@ mro release major    # Bump major: 1.2.3 → 2.0.0
 6. ✅ Creates git commit and tag (`vX.Y.Z`)
 
 **Safety checks:**
+
 - ❌ Fails if working tree is dirty
 - ❌ Fails if CI checks fail
 
 **After release:**
+
 ```bash
 git push origin main
 git push origin v1.2.4
 npm publish  # if publishing to npm
+```
+
+### `audit`, `deps`, `doctor`, `report`, `init`, `config`
+
+```bash
+mro audit --fail-level high
+mro deps --skip network
+mro doctor --format json
+mro report --markdown
+mro report --sarif
+mro init
+mro config validate
 ```
 
 ---
@@ -122,39 +149,48 @@ Add to `.github/workflows/ci.yml`:
 
 📖 **[Complete CI Integration Guide](docs/CI-INTEGRATION.md)** — GitHub Actions (reusable action), GitLab, CircleCI, Jenkins examples + branch protection setup.
 
+### Branch Protection
+
+Protect `main` with these required checks:
+
+- `Node 22`
+- `Release dry-run`
+
+Require pull requests before merging, require branches to be up to date before merge, and block force pushes. If the workflow name changes, update branch protection to match the exact check names shown by GitHub.
+
 ---
 
 ## What It Checks
 
-| Check | Enforcement Reason |
-|-------|-------------------|
-| `package.json` | Node projects must declare dependencies and metadata |
-| `README.md` | Repos without documentation are unmaintainable |
-| `LICENSE` | No license = legal ambiguity = unusable |
-| `CHANGELOG.md` | Version history must be documented |
-| `.gitignore` | Secrets and build artifacts must not be committed |
-| Lockfile conflicts | Multiple lockfiles = non-deterministic installs |
-| CI workflow | Claims of "tests passing" must be verifiable |
-| Test script | `npm test` must be runnable |
-| Node engines | Supported versions must be declared |
-| Outdated deps | Stale dependencies accumulate security debt |
-| Security vulns | Known CVEs must be surfaced |
+| Check              | Enforcement Reason                                   |
+| ------------------ | ---------------------------------------------------- |
+| `package.json`     | Node projects must declare dependencies and metadata |
+| `README.md`        | Repos without documentation are unmaintainable       |
+| `LICENSE`          | No license = legal ambiguity = unusable              |
+| `CHANGELOG.md`     | Version history must be documented                   |
+| `.gitignore`       | Secrets and build artifacts must not be committed    |
+| Lockfile conflicts | Multiple lockfiles = non-deterministic installs      |
+| CI workflow        | Claims of "tests passing" must be verifiable         |
+| Test script        | `npm test` must be runnable                          |
+| Node engines       | Supported versions must be declared                  |
+| Outdated deps      | Stale dependencies accumulate security debt          |
+| Security vulns     | Known CVEs must be surfaced                          |
 
 ---
 
 ## Plans
 
-| Feature | Free (CLI) | Starter ($29/mo) | Organization ($99/mo) | Enterprise ($500+/mo) |
-|---------|------------|------------------|----------------------|----------------------|
-| **Local CLI** | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited |
-| **Public repos** | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited |
-| **Private repos (GitHub App)** | ❌ | ✅ Up to 5 | ✅ Up to 50 | ✅ Unlimited |
-| **Automated PR checks** | ❌ | ✅ | ✅ | ✅ |
-| **Compliance dashboard** | ❌ | ❌ | ✅ | ✅ |
-| **Slack/Discord integration** | ❌ | ❌ | ✅ | ✅ |
-| **Audit logs & reporting** | ❌ | ❌ | ❌ | ✅ |
-| **Self-hosted deployment** | ✅ (DIY) | ❌ | ❌ | ✅ |
-| **Support** | Community | Email (48h) | Email (24h) | Dedicated + SLA (4h) |
+| Feature                        | Free (CLI)   | Starter ($29/mo) | Organization ($99/mo) | Enterprise ($500+/mo) |
+| ------------------------------ | ------------ | ---------------- | --------------------- | --------------------- |
+| **Local CLI**                  | ✅ Unlimited | ✅ Unlimited     | ✅ Unlimited          | ✅ Unlimited          |
+| **Public repos**               | ✅ Unlimited | ✅ Unlimited     | ✅ Unlimited          | ✅ Unlimited          |
+| **Private repos (GitHub App)** | ❌           | ✅ Up to 5       | ✅ Up to 50           | ✅ Unlimited          |
+| **Automated PR checks**        | ❌           | ✅               | ✅                    | ✅                    |
+| **Compliance dashboard**       | ❌           | ❌               | ✅                    | ✅                    |
+| **Slack/Discord integration**  | ❌           | ❌               | ✅                    | ✅                    |
+| **Audit logs & reporting**     | ❌           | ❌               | ❌                    | ✅                    |
+| **Self-hosted deployment**     | ✅ (DIY)     | ❌               | ❌                    | ✅                    |
+| **Support**                    | Community    | Email (48h)      | Email (24h)           | Dedicated + SLA (4h)  |
 
 See **[PRICING.md](PRICING.md)** for full details, philosophy, and economic boundaries.
 
@@ -163,9 +199,11 @@ See **[PRICING.md](PRICING.md)** for full details, philosophy, and economic boun
 ## Roadmap
 
 - [x] `mro release` — Automate changelog + version bump + tag ✅
-- [ ] `mro deps` — Check for outdated/vulnerable dependencies
-- [ ] `mro audit` — Security-focused checks
-- [ ] Config file support (`.mrorc`)
+- [x] `mro deps` — Check for outdated/vulnerable dependencies
+- [x] `mro audit` — Security-focused checks
+- [x] Config file support (`.mrorc.json`)
+- [x] `mro doctor` — Verify local environment readiness
+- [x] `mro report` — Emit Markdown and SARIF reports
 
 ---
 

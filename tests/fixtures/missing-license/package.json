@@ -1,0 +1,23 @@
+{
+  "name": "mro-missing-license-fixture",
+  "version": "1.0.0",
+  "description": "Fixture missing LICENSE",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "author": "Fixture Author",
+  "license": "MIT",
+  "packageManager": "npm@11.9.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/example/mro-missing-license-fixture.git"
+  },
+  "bugs": {
+    "url": "https://github.com/example/mro-missing-license-fixture/issues"
+  },
+  "homepage": "https://github.com/example/mro-missing-license-fixture#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

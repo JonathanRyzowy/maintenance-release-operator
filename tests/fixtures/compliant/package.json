@@ -1,0 +1,32 @@
+{
+  "name": "mro-compliant-fixture",
+  "version": "1.0.0",
+  "description": "Fully compliant fixture project",
+  "type": "module",
+  "bin": {
+    "mro": "./src/index.js",
+    "maintenance-release-operator": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "author": "Fixture Author",
+  "license": "MIT",
+  "packageManager": "npm@11.9.0",
+  "files": [
+    "src/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/example/mro-compliant-fixture.git"
+  },
+  "bugs": {
+    "url": "https://github.com/example/mro-compliant-fixture/issues"
+  },
+  "homepage": "https://github.com/example/mro-compliant-fixture#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

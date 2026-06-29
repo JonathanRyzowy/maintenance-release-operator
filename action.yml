@@ -9,7 +9,21 @@ inputs:
     description: 'Whether to fail the workflow if checks fail'
     required: false
     default: 'true'
-  
+
+outputs:
+  passed:
+    description: 'Number of checks that passed'
+    value: ${{ steps.mro-check.outputs.passed }}
+  failed:
+    description: 'Number of checks that failed'
+    value: ${{ steps.mro-check.outputs.failed }}
+  total:
+    description: 'Total number of checks'
+    value: ${{ steps.mro-check.outputs.total }}
+  report-json:
+    description: 'Compact JSON report payload'
+    value: ${{ steps.mro-check.outputs.report-json }}
+
 runs:
   using: 'composite'
   steps:
@@ -19,7 +33,17 @@ runs:
       run: |
         npx maintenance-release-operator check --json > ${{ runner.temp }}/mro-output.json || echo "FAILED=true" >> $GITHUB_OUTPUT
         cat ${{ runner.temp }}/mro-output.json
-    
+        node -e "
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync(process.env.MRO_OUTPUT, 'utf8'));
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, \`passed=\${data.passed}\n\`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, \`failed=\${data.failed}\n\`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, \`total=\${data.total}\n\`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, \`report-json=\${JSON.stringify(data)}\n\`);
+        "
+      env:
+        MRO_OUTPUT: ${{ runner.temp }}/mro-output.json
+
     - name: Parse and display results
       shell: bash
       run: |
@@ -34,19 +58,19 @@ runs:
             console.log(\`**Passed:** \${data.passed}/\${data.passed + data.failed}\`);
             console.log(\`**Failed:** \${data.failed}/\${data.passed + data.failed}\`);
             console.log('');
-            if (data.checks) {
+            if (data.results) {
               console.log('### Details');
               console.log('');
-              data.checks.forEach(check => {
+              data.results.forEach(check => {
                 const icon = check.passed ? '✅' : '❌';
-                console.log(\`\${icon} **\${check.name}**\`);
-                if (check.message) console.log(\`   \${check.message}\`);
+                console.log(\`\${icon} **\${check.id}** — \${check.name}\`);
+                if (!check.passed && check.fix) console.log(\`   \${check.fix}\`);
                 console.log('');
               });
             }
           " >> $GITHUB_STEP_SUMMARY
         fi
-    
+
     - name: Fail if checks failed
       shell: bash
       if: inputs.fail-on-error == 'true' && steps.mro-check.outputs.FAILED == 'true'

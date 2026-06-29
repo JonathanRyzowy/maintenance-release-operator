@@ -8,10 +8,13 @@
     "mro": "./src/index.js"
   },
   "main": "./src/index.js",
+  "packageManager": "npm@11.9.0",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "lint": "echo 'Lint placeholder - pass' && exit 0",
-    "ci": "npm run lint && npm run test",
+    "lint": "eslint .",
+    "format:check": "prettier --check src tests package.json action.yml .github/workflows/ci.yml .mrorc.schema.json",
+    "typecheck": "tsc --noEmit",
+    "ci": "npm run lint && npm run format:check && npm run typecheck && npm run test",
     "start": "node src/index.js"
   },
   "keywords": [
@@ -50,5 +53,12 @@
   "bugs": {
     "url": "https://github.com/JonathanRyzowy/maintenance-release-operator/issues"
   },
-  "homepage": "https://github.com/JonathanRyzowy/maintenance-release-operator#readme"
+  "homepage": "https://github.com/JonathanRyzowy/maintenance-release-operator#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^26.0.1",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
 }
